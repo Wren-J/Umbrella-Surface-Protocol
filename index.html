@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umbrella Corporation | 保护伞公司</title>
+<meta name="description" content="Umbrella Corporation corporate homepage demo — fan-made concept.">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<style>
+/* ============ Design Tokens ============ */
+:root{
+  --red:#C8102E;
+  --red-bright:#E60012;
+  --red-deep:#8E0E22;
+  --ink:#101418;
+  --ink-soft:#3A4149;
+  --gray:#6E7681;
+  --line:#E6E4E0;
+  --paper:#FFFFFF;
+  --bg-light:#F7F6F4;
+  --bg-dark:#0B0E13;
+  --bg-dark-2:#11161E;
+  --text-on-dark:#F2F3F5;
+  --text-on-dark-dim:#9AA3AE;
+  --radius:14px;
+  --shadow-sm:0 2px 10px rgba(16,20,24,.06);
+  --shadow-md:0 14px 40px rgba(16,20,24,.12);
+  --shadow-red:0 12px 32px rgba(200,16,46,.28);
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+::selection{background:var(--red);color:#fff}
+
+.container{width:min(1240px,calc(100% - clamp(64px,8vw,144px)));margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--red)}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--red)}
+.section{padding:124px 0}
+.section-head{max-width:660px;margin-bottom:64px}
+.section-head h2{font-size:clamp(30px,4vw,44px);font-weight:700;letter-spacing:-.01em;line-height:1.15;margin-top:16px}
+.section-head p{margin-top:16px;color:var(--gray);font-size:17px}
+
+/* ============ Scroll Reveal ============ */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-delay="1"]{transition-delay:.12s}
+.reveal[data-delay="2"]{transition-delay:.24s}
+.reveal[data-delay="3"]{transition-delay:.36s}
+.reveal[data-delay="4"]{transition-delay:.48s}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+
+/* ============ Header ============ */
+.header{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .4s var(--ease),box-shadow .4s var(--ease),border-color .4s;border-bottom:1px solid transparent}
+.header .container{display:flex;align-items:center;gap:32px;height:76px}
+.header.scrolled{background:rgba(11,14,19,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom-color:rgba(255,255,255,.08)}
+.header:not(.scrolled) .nav a{color:rgba(255,255,255,.85)}
+.header:not(.scrolled) .nav a:hover{color:#fff}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .logo{width:38px;height:38px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.35));transition:transform .5s var(--ease)}
+.brand:hover .logo{transform:rotate(14deg) scale(1.06)}
+.brand .wordmark{display:flex;flex-direction:column;line-height:1}
+.header:not(.scrolled) .wordmark b{color:#fff}
+.wordmark b{font-size:17px;letter-spacing:.24em;color:var(--text-on-dark);font-weight:700}
+.wordmark span{font-size:9px;letter-spacing:.42em;color:var(--red-bright);font-weight:600;margin-top:4px;text-transform:uppercase}
+.nav{display:flex;gap:6px;margin-left:auto}
+.nav a{position:relative;padding:10px 14px;font-size:14.5px;font-weight:500;color:var(--text-on-dark);transition:color .3s}
+.nav a::after{content:"";position:absolute;left:14px;right:14px;bottom:4px;height:2px;background:var(--red-bright);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.nav a:hover::after{transform:scaleX(1)}
+.header-cta{display:flex;align-items:center;gap:14px}
+.lang{display:flex;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:3px;transition:border-color .3s}
+.header:not(.scrolled) .lang{border-color:rgba(255,255,255,.25)}
+.header.scrolled .lang{border-color:rgba(255,255,255,.18)}
+.lang button{padding:4px 12px;font-size:12px;font-weight:600;letter-spacing:.06em;border-radius:999px;color:rgba(255,255,255,.65);transition:all .3s var(--ease)}
+.lang button:hover{color:#fff}
+.lang button.active{background:var(--red);color:#fff}
+.portal-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border:1px solid rgba(255,255,255,.35);border-radius:999px;color:#fff;font-size:13px;font-weight:600;letter-spacing:.04em;transition:all .35s var(--ease);overflow:hidden;position:relative}
+.portal-btn::before{content:"";position:absolute;inset:0;background:#fff;transform:translateY(101%);transition:transform .35s var(--ease)}
+.portal-btn span{position:relative;z-index:1;transition:color .35s}
+.portal-btn:hover{border-color:#fff;box-shadow:0 8px 24px rgba(255,255,255,.12)}
+.portal-btn:hover::before{transform:translateY(0)}
+.portal-btn:hover span{color:var(--ink)}
+.burger{display:none;flex-direction:column;gap:5px;padding:8px}
+.burger i{display:block;width:22px;height:2px;background:#fff;transition:.3s}
+
+/* ============ Hero ============ */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;background:var(--bg-dark);color:var(--text-on-dark);overflow:hidden}
+.hero-bg{position:absolute;inset:-12% 0 -12% 0;will-change:transform}
+.hero-bg .glow{position:absolute;width:70vw;height:70vw;max-width:980px;max-height:980px;border-radius:50%;background:radial-gradient(circle,rgba(200,16,46,.22),transparent 62%);top:-18%;right:-14%;filter:blur(10px)}
+.hero-bg .glow.g2{background:radial-gradient(circle,rgba(46,74,110,.25),transparent 60%);top:auto;right:auto;bottom:-24%;left:-12%}
+/* CG 氛围层（参考生化危机 CG 影像：暗色实验室 + 警报红光 + 扫描质感） */
+.alert-pulse{position:absolute;left:-12%;bottom:-32%;width:58vw;height:58vw;border-radius:50%;background:radial-gradient(circle,rgba(230,0,18,.26),transparent 62%);filter:blur(24px);animation:breathe 5.5s ease-in-out infinite}
+.scanbeam{position:absolute;top:-25%;left:-30%;width:34%;height:150%;background:linear-gradient(100deg,transparent 20%,rgba(120,165,225,.08) 45%,rgba(255,255,255,.13) 50%,rgba(120,165,225,.08) 55%,transparent 80%);transform:rotate(9deg);filter:blur(5px);animation:beam 10s linear infinite}
+.scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 4px);mix-blend-mode:overlay;pointer-events:none}
+@keyframes breathe{0%,100%{opacity:.45;transform:scale(1)}50%{opacity:1;transform:scale(1.14)}}
+@keyframes beam{0%{left:-38%}100%{left:118%}}
+@media (prefers-reduced-motion:reduce){.alert-pulse{animation:none;opacity:.5}.scanbeam{animation:none;opacity:.5}}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 90% 80% at 60% 40%,#000 30%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 90% 80% at 60% 40%,#000 30%,transparent 75%)}
+.hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:48px;padding:140px 0 120px}
+/* 首屏左侧文案块整体右移：与页面边缘保持自然留白，垂直对齐不变 */
+.hero-copy{padding-left:clamp(8px,5vw,88px)}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border:1px solid rgba(255,255,255,.16);border-radius:999px;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-on-dark-dim);animation:fadeUp .9s var(--ease) both .1s}
+.hero-tag .dot{width:7px;height:7px;border-radius:50%;background:var(--red-bright);box-shadow:0 0 0 0 rgba(230,0,18,.55);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(230,0,18,.5)}70%{box-shadow:0 0 0 9px rgba(230,0,18,0)}100%{box-shadow:0 0 0 0 rgba(230,0,18,0)}}
+.hero h1{margin-top:28px;font-size:clamp(40px,5.6vw,72px);line-height:1.06;font-weight:700;letter-spacing:-.015em;animation:fadeUp .9s var(--ease) both .22s}
+.hero h1 em{font-style:normal;color:var(--red-bright);position:relative;white-space:nowrap}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:.1em;background:rgba(230,0,18,.28);z-index:-1}
+.hero-sub{margin-top:26px;max-width:520px;font-size:17.5px;color:var(--text-on-dark-dim);animation:fadeUp .9s var(--ease) both .34s}
+.hero-actions{display:flex;flex-wrap:wrap;gap:16px;margin-top:40px;animation:fadeUp .9s var(--ease) both .46s}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:999px;font-size:15px;font-weight:600;letter-spacing:.02em;transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .35s,color .35s,border-color .35s;position:relative;overflow:hidden}
+.btn .arr{transition:transform .35s var(--ease)}
+.btn:hover .arr{transform:translateX(5px)}
+.btn-primary{background:var(--red);color:#fff;box-shadow:var(--shadow-red)}
+.btn-primary::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.25) 50%,transparent 70%);transform:translateX(-110%);transition:transform .7s var(--ease)}
+.btn-primary:hover{background:var(--red-deep);transform:translateY(-3px);box-shadow:0 18px 44px rgba(200,16,46,.4)}
+.btn-primary:hover::before{transform:translateX(110%)}
+.btn-ghost{border:1px solid rgba(255,255,255,.3);color:#fff;background:transparent}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.08);transform:translateY(-3px)}
+.hero-slogan{margin-top:46px;display:flex;align-items:center;gap:14px;color:var(--text-on-dark-dim);font-size:13px;letter-spacing:.28em;text-transform:uppercase;animation:fadeUp .9s var(--ease) both .58s}
+.hero-slogan::before{content:"";width:44px;height:1px;background:rgba(255,255,255,.3)}
+/* hero logo emblem */
+.hero-emblem{position:relative;display:flex;justify-content:center;animation:fadeUp 1.1s var(--ease) both .3s}
+.emblem-ring{position:absolute;inset:-34px;border:1px solid rgba(255,255,255,.12);border-radius:50%;animation:spin 40s linear infinite}
+.emblem-ring::before{content:"";position:absolute;top:-4px;left:50%;width:7px;height:7px;border-radius:50%;background:var(--red-bright);transform:translateX(-50%);box-shadow:0 0 14px rgba(230,0,18,.9)}
+.emblem-ring.r2{inset:-70px;border-style:dashed;animation-duration:70s;animation-direction:reverse}
+.emblem-ring.r2::before{display:none}
+.hero-logo{width:min(300px,56vw);height:auto;filter:drop-shadow(0 24px 60px rgba(0,0,0,.6)) drop-shadow(0 0 42px rgba(200,16,46,.35));animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+.hero-stats{position:relative;z-index:2;border-top:1px solid rgba(255,255,255,.1);animation:fadeUp 1s var(--ease) both .7s}
+.hero-stats .container{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:30px 0}
+.stat b{font-size:clamp(24px,2.6vw,34px);font-weight:700;color:#fff;display:flex;align-items:baseline;gap:2px}
+.stat b i{font-style:normal;color:var(--red-bright);font-size:.65em}
+.stat span{display:block;margin-top:4px;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-on-dark-dim)}
+.scroll-hint{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-on-dark-dim);font-size:11px;letter-spacing:.3em;text-transform:uppercase}
+.scroll-hint .mouse{width:22px;height:36px;border:1.5px solid rgba(255,255,255,.4);border-radius:12px;position:relative}
+.scroll-hint .mouse::after{content:"";position:absolute;left:50%;top:7px;width:3px;height:7px;border-radius:2px;background:var(--red-bright);transform:translateX(-50%);animation:wheel 1.8s infinite}
+@keyframes wheel{0%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,12px)}}
+
+/* ============ About ============ */
+.about{background:var(--paper)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.about-visual{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/4.6;background:#0D1219;box-shadow:var(--shadow-md)}
+.av-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 42%}
+.av-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,13,19,.34) 0%,rgba(9,13,19,.10) 40%,rgba(9,13,19,.76) 100%)}
+.about-visual .av-card{position:absolute;left:26px;right:26px;bottom:26px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(10px);border-radius:12px;padding:20px 22px;color:#fff}
+.about-visual .av-card b{display:block;font-size:15px;letter-spacing:.06em}
+.about-visual .av-card span{display:block;margin-top:4px;font-size:12.5px;color:var(--text-on-dark-dim);letter-spacing:.04em}
+.about-visual .av-badge{position:absolute;top:26px;left:26px;display:inline-flex;align-items:center;gap:8px;background:var(--red);color:#fff;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:8px 14px;border-radius:999px;box-shadow:var(--shadow-red)}
+.about-copy h2{font-size:clamp(30px,3.6vw,42px);font-weight:700;line-height:1.18;letter-spacing:-.01em;margin-top:16px}
+.about-copy h2 em{font-style:normal;color:var(--red)}
+.about-copy>p{margin-top:20px;color:var(--gray);font-size:16.5px}
+.values{margin-top:38px;display:grid;gap:0}
+.value{display:flex;gap:18px;padding:20px 4px;border-top:1px solid var(--line);transition:background .3s,padding-left .3s var(--ease)}
+.value:last-child{border-bottom:1px solid var(--line)}
+.value:hover{background:var(--bg-light);padding-left:14px}
+.value .v-num{font-size:13px;font-weight:700;color:var(--red);letter-spacing:.1em;padding-top:3px}
+.value b{display:block;font-size:17px;letter-spacing:.02em}
+.value p{margin-top:4px;font-size:14px;color:var(--gray)}
+
+/* ============ Businesses ============ */
+.biz{background:var(--bg-light)}
+.biz-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}
+.biz-card{position:relative;border-radius:var(--radius);overflow:hidden;background:var(--paper);box-shadow:var(--shadow-sm);transition:transform .45s var(--ease),box-shadow .45s var(--ease);display:flex;flex-direction:column}
+.biz-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-md)}
+.biz-card .thumb{position:relative;height:190px;overflow:hidden}
+.biz-card .thumb .art{position:absolute;inset:0;transition:transform .8s var(--ease)}
+.biz-card:hover .thumb .art{transform:scale(1.07)}
+.biz-card .thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(11,14,19,.55));opacity:.9}
+.biz-card .tagchip{position:absolute;top:16px;left:16px;z-index:2;background:rgba(255,255,255,.92);color:var(--ink);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:999px}
+.biz-card .body{padding:26px 26px 28px;display:flex;flex-direction:column;flex:1}
+.biz-card h3{font-size:21px;font-weight:700;letter-spacing:.01em;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.biz-card h3 .go{width:34px;height:34px;flex:none;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;transition:all .4s var(--ease)}
+.biz-card h3 .go svg{transition:transform .4s var(--ease)}
+.biz-card:hover h3 .go{background:var(--red);border-color:var(--red);color:#fff;transform:rotate(-45deg)}
+.biz-card p{margin-top:10px;font-size:14.5px;color:var(--gray);flex:1}
+.biz-card .foot{margin-top:18px;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);font-weight:700;opacity:0;transform:translateY(8px);transition:all .4s var(--ease)}
+.biz-card:hover .foot{opacity:1;transform:none}
+.c5{grid-column:span 5}.c7{grid-column:span 7}.c4{grid-column:span 4}.c8{grid-column:span 8}
+/* CSS-drawn thumbnails */
+.biz-card .thumb svg{position:absolute;inset:0;width:100%;height:100%}
+.art-pharma{background:radial-gradient(120% 130% at 20% 15%,#C4455A 0%,#A61B33 40%,#6E0E1E 78%,#3F0812 100%)}
+.art-medical{background:linear-gradient(150deg,#0F1826,#1C2A40 60%,#27405F)}
+.art-bio{background:linear-gradient(140deg,#101418,#182029 55%,#22303C)}
+.art-consumer{background:linear-gradient(140deg,#F7F3EE,#EDE4DA 60%,#E2D4C6)}
+/* wide banner card */
+.biz-banner{grid-column:span 12;position:relative;border-radius:var(--radius);overflow:hidden;background:linear-gradient(115deg,#12161D 0%,#1A222D 55%,#33121A 100%);color:#fff;padding:44px 48px;display:flex;align-items:center;gap:36px;box-shadow:var(--shadow-sm);transition:box-shadow .45s,transform .45s var(--ease)}
+.biz-banner:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.biz-banner .bb-copy{flex:1}
+.biz-banner h3{font-size:24px;font-weight:700}
+.biz-banner p{margin-top:8px;color:var(--text-on-dark-dim);font-size:15px;max-width:560px}
+.biz-banner .hexbg{position:absolute;right:-30px;top:-40px;opacity:.25;pointer-events:none}
+.biz-banner .btn{flex:none}
+.btn-white{background:#fff;color:var(--ink)}
+.btn-white:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(255,255,255,.18)}
+
+/* ============ Science ============ */
+.sci{background:var(--paper);position:relative;overflow:hidden}
+.sci .bgword{position:absolute;right:-2%;top:6%;font-size:clamp(120px,18vw,240px);font-weight:800;letter-spacing:-.03em;color:rgba(16,20,24,.035);pointer-events:none;user-select:none;line-height:1}
+.pipeline{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:64px}
+.pipe{position:relative;padding:30px 30px 26px;border-radius:var(--radius);background:var(--bg-light);border:1px solid transparent;transition:all .4s var(--ease);overflow:hidden}
+.pipe::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--red);transform:scaleY(0);transform-origin:top;transition:transform .45s var(--ease)}
+.pipe:hover{background:#fff;border-color:var(--line);box-shadow:var(--shadow-md);transform:translateY(-5px)}
+.pipe:hover::before{transform:scaleY(1)}
+.pipe b{font-size:clamp(34px,3.4vw,46px);font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+.pipe b i{font-style:normal;color:var(--red)}
+.pipe span{display:block;margin-top:6px;font-size:13.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray)}
+.fields{display:flex;flex-wrap:wrap;gap:12px}
+.field{padding:11px 20px;border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:500;color:var(--ink-soft);transition:all .35s var(--ease);background:#fff}
+.field:hover{border-color:var(--red);color:var(--red);background:rgba(200,16,46,.05);transform:translateY(-2px);box-shadow:0 8px 20px rgba(200,16,46,.12)}
+
+/* ============ Careers ============ */
+.careers{position:relative;background:linear-gradient(120deg,#7E0C1E 0%,var(--red) 45%,#A3122B 100%);color:#fff;overflow:hidden}
+.careers .hexpat{position:absolute;inset:0;opacity:.16;pointer-events:none}
+.careers .container{position:relative}
+.careers-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+.careers h2{font-size:clamp(30px,3.8vw,44px);font-weight:700;line-height:1.16;margin-top:16px}
+.careers .lead{margin-top:18px;font-size:16.5px;color:rgba(255,255,255,.85)}
+.careers .eyebrow{color:#fff}
+.careers .eyebrow::before{background:#fff}
+.perks{display:grid;gap:16px}
+.perk{display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(8px);border-radius:12px;padding:18px 20px;transition:all .4s var(--ease)}
+.perk:hover{background:rgba(255,255,255,.18);transform:translateX(8px);border-color:rgba(255,255,255,.4)}
+.perk .ic{width:42px;height:42px;flex:none;border-radius:10px;background:rgba(255,255,255,.16);display:grid;place-items:center}
+.perk b{display:block;font-size:15.5px}
+.perk span{display:block;margin-top:2px;font-size:13px;color:rgba(255,255,255,.75)}
+.careers .btn{margin-top:34px}
+.btn-light{background:#fff;color:var(--red-deep)}
+.btn-light:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(0,0,0,.25)}
+.btn-outline-w{border:1px solid rgba(255,255,255,.55);color:#fff}
+.btn-outline-w:hover{background:rgba(255,255,255,.14);border-color:#fff;transform:translateY(-3px)}
+
+/* ============ News ============ */
+.news{background:var(--bg-light)}
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.news-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .45s var(--ease),box-shadow .45s var(--ease);display:flex;flex-direction:column}
+.news-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-md)}
+.news-card .thumb{height:170px;position:relative;overflow:hidden}
+.news-card .thumb .art{position:absolute;inset:0;transition:transform .8s var(--ease)}
+.news-card:hover .thumb .art{transform:scale(1.08)}
+.news-card .cat{position:absolute;top:14px;left:14px;z-index:2;background:var(--red);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:6px 11px;border-radius:999px}
+.news-card .body{padding:22px 24px 26px;display:flex;flex-direction:column;flex:1}
+.news-card time{font-size:12px;letter-spacing:.14em;color:var(--gray);text-transform:uppercase}
+.news-card h3{margin-top:8px;font-size:17.5px;font-weight:700;line-height:1.4;transition:color .3s}
+.news-card:hover h3{color:var(--red)}
+.news-card p{margin-top:8px;font-size:13.5px;color:var(--gray);flex:1}
+.news-card .more{margin-top:16px;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--red)}
+.news-card .more svg{transition:transform .35s var(--ease)}
+.news-card:hover .more svg{transform:translateX(5px)}
+.art-news1{background:linear-gradient(140deg,#182430,#22384C 55%,#34506E)}
+.art-news1::before{content:"";position:absolute;left:50%;bottom:-8%;width:78%;height:64%;transform:translateX(-50%);background:linear-gradient(180deg,#2C3E54,#141C26);border-radius:10px 10px 0 0;box-shadow:inset 0 8px 22px rgba(140,180,230,.25)}
+.art-news1::after{content:"";position:absolute;left:50%;bottom:34%;width:10px;height:10%;transform:translateX(-50%);background:var(--red-bright);box-shadow:0 0 18px rgba(230,0,18,.9)}
+.art-news2{background:radial-gradient(130% 120% at 25% 20%,#2E4A68 0%,#17293E 55%,#0D1622 100%)}
+.art-news2::before{content:"";position:absolute;left:50%;top:50%;width:110px;height:110px;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(from 0deg,#3E7BC0,#7FD0E8,#3E7BC0);mask:radial-gradient(circle,transparent 34%,#000 35%);-webkit-mask:radial-gradient(circle,transparent 34%,#000 35%);animation:spin 14s linear infinite}
+.art-news3{background:linear-gradient(140deg,#EFE9E1,#E0D5C8 60%,#CBB9A6)}
+.art-news3::before{content:"";position:absolute;left:20%;top:26%;width:60%;height:52%;background:repeating-linear-gradient(0deg,#fff 0 12px,#E9E1D6 12px 14px);border-radius:6px;box-shadow:0 14px 26px rgba(100,80,60,.25);transform:rotate(-3deg)}
+.news-pager{margin-top:44px;display:flex;justify-content:center;align-items:center;gap:18px}
+.news-pager .dots{display:flex;gap:8px}
+.news-pager .dots i{width:8px;height:8px;border-radius:50%;background:#CFCBC5;transition:all .3s}
+.news-pager .dots i.on{background:var(--red);width:22px;border-radius:99px}
+.pager-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--ink-soft);background:#fff;transition:all .35s var(--ease)}
+.pager-btn:hover{background:var(--red);border-color:var(--red);color:#fff;transform:translateY(-2px);box-shadow:var(--shadow-red)}
+
+/* ============ Footer ============ */
+.footer{background:var(--bg-dark);color:var(--text-on-dark-dim)}
+.footer-top{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:48px;padding:78px 0 54px}
+.footer .brand .wordmark b{color:#fff}
+.footer-slogan{margin-top:18px;font-size:13.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.footer-desc{margin-top:14px;font-size:13.5px;line-height:1.8;max-width:320px}
+.footer h4{color:#fff;font-size:13px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:18px;font-weight:700}
+.footer-col a{display:block;padding:6px 0;font-size:14px;color:var(--text-on-dark-dim);transition:color .3s,padding-left .3s var(--ease)}
+.footer-col a:hover{color:#fff;padding-left:8px}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding:26px 0 34px}
+.fan-notice{margin-bottom:18px;padding:14px 18px;border:1px dashed rgba(255,255,255,.22);border-radius:10px;font-size:12.5px;line-height:1.8;color:rgba(255,255,255,.5)}
+.fan-notice b{color:rgba(255,255,255,.75)}
+.footer-meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:12.5px;letter-spacing:.06em}
+.footer-meta a{transition:color .3s}
+.footer-meta a:hover{color:#fff}
+
+/* ============ Responsive ============ */
+@media (max-width:1020px){
+  .nav{display:none}
+  .burger{display:flex}
+  .hero-inner{grid-template-columns:1fr;text-align:center;padding:130px 0 90px}
+  .hero-copy{padding-left:0}
+  .hero-sub{margin-left:auto;margin-right:auto}
+  .hero-actions,.hero-slogan{justify-content:center}
+  .hero-emblem{order:-1}
+  .hero-logo{width:min(190px,48vw)}
+  .about-grid,.careers-grid{grid-template-columns:1fr;gap:44px}
+  .c5,.c7,.c4,.c8{grid-column:span 12}
+  .pipeline{grid-template-columns:1fr}
+  .news-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr;gap:36px}
+  .hero-stats .container{grid-template-columns:repeat(2,1fr)}
+  .biz-banner{flex-direction:column;align-items:flex-start;padding:34px 28px}
+  .section{padding:80px 0}
+}
+
+/* ============ Fake Cookie Notice ============ */
+.cookie-bar{position:fixed;left:22px;bottom:22px;z-index:1200;width:min(360px,calc(100vw - 44px));background:#FFFFFF;border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 48px rgba(10,14,20,.16);padding:18px 20px;opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .45s var(--ease),transform .45s var(--ease)}
+.cookie-bar.show{opacity:1;transform:translateY(0);pointer-events:auto}
+.cookie-bar h5{display:flex;align-items:center;gap:8px;font-size:13.5px;letter-spacing:.02em}
+.cookie-bar h5 i{width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block}
+.cookie-bar p{margin-top:6px;font-size:12px;line-height:1.65;color:var(--gray)}
+.cookie-actions{display:flex;gap:10px;margin-top:12px}
+.cookie-actions button{flex:1;padding:8px 0;font-size:12px;font-weight:600;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;transition:all .25s var(--ease)}
+.cookie-actions button:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(10,14,20,.1)}
+.cookie-actions .ck-ok{background:var(--red);border-color:var(--red);color:#fff}
+.cookie-actions .ck-ok:hover{background:#a90d26}
+.cookie-fine{margin-top:10px;font-size:10.5px;color:#A6AEBB;letter-spacing:.02em}
+
+/* ============ Employee Portal Modal ============ */
+.modal-mask{position:fixed;inset:0;z-index:1500;background:rgba(5,7,10,.62);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
+.modal-mask.open{opacity:1;pointer-events:auto}
+.portal-modal{width:min(400px,calc(100vw - 40px));background:#0D1219;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:34px 34px 28px;color:#fff;position:relative;transform:translateY(14px) scale(.98);transition:transform .35s var(--ease);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.modal-mask.open .portal-modal{transform:translateY(0) scale(1)}
+.portal-modal .pm-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:none;color:rgba(255,255,255,.7);font-size:14px;cursor:pointer;transition:all .25s}
+.portal-modal .pm-close:hover{background:rgba(255,255,255,.12);color:#fff;transform:rotate(90deg)}
+.portal-modal .pm-tag{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.portal-modal h4{margin-top:8px;font-size:20px;letter-spacing:.04em}
+.portal-modal .pm-sub{margin-top:6px;font-size:12px;color:rgba(255,255,255,.5);line-height:1.6}
+.portal-modal form{margin-top:22px;display:grid;gap:14px}
+.portal-modal label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.portal-modal input{width:100%;margin-top:6px;padding:11px 13px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:9px;color:#fff;font-size:14px;letter-spacing:.08em;outline:none;transition:border-color .25s,box-shadow .25s;font-family:inherit}
+.portal-modal input:focus{border-color:var(--red-bright);box-shadow:0 0 0 3px rgba(200,16,46,.22)}
+.portal-modal .pm-submit{margin-top:6px;padding:12px 0;border:none;border-radius:9px;background:var(--red);color:#fff;font-size:13.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .3s var(--ease)}
+.portal-modal .pm-submit:hover{background:#a90d26;box-shadow:0 10px 26px rgba(200,16,46,.35);transform:translateY(-1px)}
+.portal-modal .pm-hint{margin-top:16px;font-size:10.5px;color:rgba(255,255,255,.32);letter-spacing:.04em;text-align:center}
+.portal-modal .pm-error{margin-top:12px;text-align:center;font-size:12px;font-weight:700;letter-spacing:.18em;color:#FF4D5E;min-height:15px}
+.portal-modal.shake{animation:pmShake .4s}
+@keyframes pmShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(5px)}}
+
+/* ============ Glitch Mode (post-login ARG) ============ */
+#gScan{position:fixed;inset:0;z-index:1800;pointer-events:none;display:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.028) 0 2px,transparent 2px 5px)}
+#gFlash{position:fixed;inset:0;z-index:1801;pointer-events:none;display:none;background:#fff;opacity:0}
+#gRed{position:fixed;inset:0;z-index:1800;pointer-events:none;display:none;background:radial-gradient(120% 100% at 50% 100%,rgba(200,16,46,.16),transparent 60%);opacity:0}
+body.glitch #gScan,body.glitch #gFlash,body.glitch #gRed{display:block}
+body.glitch #gScan{animation:gScanFlick .16s steps(2) infinite}
+@keyframes gScanFlick{0%{opacity:.5}50%{opacity:.85}100%{opacity:.4}}
+body.glitch :is(h1,h2,h3,h4,p,a,button,span:not(.go)){animation:gJit .3s steps(2,end) infinite}
+@keyframes gJit{0%{transform:translate(0,0)}25%{transform:translate(.6px,-1px)}50%{transform:translate(-.8px,.6px)}75%{transform:translate(.5px,1px)}100%{transform:translate(0,0)}}
+body.glitch h1,body.glitch h2,body.glitch h3{text-shadow:1.2px 0 rgba(255,40,60,.55),-1.2px 0 rgba(60,180,255,.45)}
+body.glitch [data-alt-zh].g-swap{color:var(--red-bright);text-shadow:0 0 14px rgba(230,0,18,.4)}
+</style>
+</head>
+<body>
+
+<!-- ================= Header ================= -->
+<header class="header" id="header">
+  <div class="container">
+    <a class="brand" href="#top" aria-label="Umbrella Corporation">
+      <svg class="logo" viewBox="0 0 200 200" aria-hidden="true">
+        <g stroke="#14181D" stroke-width="4.5" stroke-linejoin="round">
+          <path d="M100 100 L100 8 Q123.7 42.7 165 35 Z" fill="#C8102E"/>
+          <path d="M100 100 L165 35 Q157.3 76.2 192 100 Z" fill="#FFFFFF"/>
+          <path d="M100 100 L192 100 Q157.3 123.8 165 165 Z" fill="#C8102E"/>
+          <path d="M100 100 L165 165 Q123.7 157.3 100 192 Z" fill="#FFFFFF"/>
+          <path d="M100 100 L100 192 Q76.3 157.3 35 165 Z" fill="#C8102E"/>
+          <path d="M100 100 L35 165 Q42.7 123.8 8 100 Z" fill="#FFFFFF"/>
+          <path d="M100 100 L8 100 Q42.7 76.2 35 35 Z" fill="#C8102E"/>
+          <path d="M100 100 L35 35 Q76.3 42.7 100 8 Z" fill="#FFFFFF"/>
+        </g>
+        <circle cx="100" cy="100" r="7" fill="#14181D"/>
+      </svg>
+      <span class="wordmark"><b>UMBRELLA</b><span>Corporation</span></span>
+    </a>
+    <nav class="nav">
+      <a href="#about" data-en="About" data-zh="关于我们" data-alt-en="The Cover-up" data-alt-zh="掩盖真相">关于我们</a>
+      <a href="#business" data-en="Businesses" data-zh="业务板块" data-alt-en="Front Operations" data-alt-zh="掩护业务">业务板块</a>
+      <a href="#science" data-en="Science" data-zh="科学研究" data-alt-en="Classified" data-alt-zh="机密实验">科学研究</a>
+      <a href="#careers" data-en="Careers" data-zh="加入我们" data-alt-en="Personnel Supply" data-alt-zh="人员征集">加入我们</a>
+      <a href="#news" data-en="Newsroom" data-zh="新闻中心" data-alt-en="Information Control" data-alt-zh="信息管控">新闻中心</a>
+    </nav>
+    <div class="header-cta">
+      <div class="lang" role="group" aria-label="Language">
+        <button id="lang-en" data-en="EN" data-zh="EN">EN</button>
+        <button id="lang-zh" class="active" data-en="中文" data-zh="中文">中文</button>
+      </div>
+      <a class="portal-btn" href="#" id="portalBtn"><span data-en="Employee Portal" data-zh="员工门户">员工门户</span></a>
+      <button class="burger" aria-label="Menu"><i></i><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= Hero ================= -->
+<section class="hero" id="top">
+  <div class="hero-bg" id="heroBg">
+    <div class="glow"></div>
+    <div class="glow g2"></div>
+    <div class="alert-pulse"></div>
+    <div class="scanbeam"></div>
+  </div>
+  <div class="hero-grid"></div>
+  <div class="scanlines"></div>
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <span class="hero-tag"><i class="dot"></i><span data-en="Umbrella Corporation · Est. 1996" data-zh="保护伞公司 · 创立于 1996" data-alt-en="Umbrella Corporation · Erased 1998" data-alt-zh="保护伞公司 · 终结于 1998">保护伞公司 · 创立于 1996</span></span>
+      <h1><span data-en="Our Business Is" data-zh="我们的事业，" data-alt-en="Our Experiment Is" data-alt-zh="我们的实验，">我们的事业，</span><br><em data-en="Life Itself." data-zh="就是生命本身。" data-alt-en="Death Itself." data-alt-zh="就是死亡本身。">就是生命本身。</em></h1>
+      <p class="hero-sub" data-en="For nearly three decades, Umbrella has been devoted to life science — from pharmaceuticals and medical devices to biosecurity, building a safer tomorrow through science." data-zh="近三十年来，保护伞始终致力于生命科学——从制药、医疗器械到生物安全，以科学构筑更安全的明天。" data-alt-en="For nearly three decades, Umbrella has been devoted to life science — from weaponized viruses to human trials, burying every truth through science." data-alt-zh="三十年来，保护伞始终致力于生命科学——从武器化病毒到人体试验，以科学掩埋每一处真相。">近三十年来，保护伞始终致力于生命科学——从制药、医疗器械到生物安全，以科学构筑更安全的明天。</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#science"><span data-en="Explore Our Science" data-zh="探索我们的科学">探索我们的科学</span><span class="arr">→</span></a>
+        <a class="btn btn-ghost" href="#about"><span data-en="About Umbrella" data-zh="了解保护伞">了解保护伞</span></a>
+      </div>
+      <div class="hero-slogan"><span data-en="A Safer Tomorrow Through Science" data-zh="更安全的明天 · 源于今天的科学" data-alt-en="A Safer Lie Through Experiments" data-alt-zh="更安全的谎言 · 源于今天的实验">更安全的明天 · 源于今天的科学</span></div>
+    </div>
+    <div class="hero-emblem">
+      <div class="emblem-ring"></div>
+      <div class="emblem-ring r2"></div>
+      <svg class="hero-logo" viewBox="0 0 200 200" aria-hidden="true">
+        <g stroke="#0A0D12" stroke-width="3" stroke-linejoin="round">
+          <path d="M100 100 L100 8 Q123.7 42.7 165 35 Z" fill="#C8102E"/>
+          <path d="M100 100 L165 35 Q157.3 76.2 192 100 Z" fill="#FFFFFF"/>
+          <path d="M100 100 L192 100 Q157.3 123.8 165 165 Z" fill="#C8102E"/>
+          <path d="M100 100 L165 165 Q123.7 157.3 100 192 Z" fill="#FFFFFF"/>
+          <path d="M100 100 L100 192 Q76.3 157.3 35 165 Z" fill="#C8102E"/>
+          <path d="M100 100 L35 165 Q42.7 123.8 8 100 Z" fill="#FFFFFF"/>
+          <path d="M100 100 L8 100 Q42.7 76.2 35 35 Z" fill="#C8102E"/>
+          <path d="M100 100 L35 35 Q76.3 42.7 100 8 Z" fill="#FFFFFF"/>
+        </g>
+        <circle cx="100" cy="100" r="6" fill="#0A0D12"/>
+      </svg>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="container">
+      <div class="stat"><b><span class="counter" data-target="1996">0</span></b><span data-en="Year Founded" data-zh="创立年份" data-alt-en="Year Erased" data-alt-zh="遗忘年份">创立年份</span></div>
+      <div class="stat"><b><span class="counter" data-target="30">0</span><i>+</i></b><span data-en="Global Facilities" data-zh="全球设施" data-alt-en="Underground Facilities" data-alt-zh="地下设施">全球设施</span></div>
+      <div class="stat"><b><span class="counter" data-target="120">0</span><i>K+</i></b><span data-en="Employees Worldwide" data-zh="全球员工" data-alt-en="Subjects Registered" data-alt-zh="在册试验体">全球员工</span></div>
+      <div class="stat"><b><span class="counter" data-target="40">0</span><i>+</i></b><span data-en="Countries Served" data-zh="运营国家与地区" data-alt-en="Countries Infiltrated" data-alt-zh="渗透国家">运营国家与地区</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="mouse"></div><span data-en="Scroll" data-zh="向下滚动" data-alt-en="Descend" data-alt-zh="继续深入">向下滚动</span></div>
+</section>
+
+<!-- ================= About ================= -->
+<section class="section about" id="about">
+  <div class="container about-grid">
+    <div class="about-visual reveal">
+      <img class="av-photo" src="assets/campus.jpg" alt="">
+      <div class="av-shade"></div>
+      <span class="av-badge" data-en="Since 1996" data-zh="始于 1996">始于 1996</span>
+      <div class="av-card">
+        <b data-en="Headquarters · Raccoon City Global Campus" data-zh="总部 · 浣熊市全球园区">总部 · 浣熊市全球园区</b>
+        <span data-en="Research · Manufacturing · Life Science Park" data-zh="研发 · 制造 · 生命科学园区">研发 · 制造 · 生命科学园区</span>
+      </div>
+    </div>
+    <div class="about-copy">
+      <span class="eyebrow reveal" data-en="Who We Are" data-zh="关于保护伞" data-alt-en="What We Hide" data-alt-zh="被掩盖的真相">关于保护伞</span>
+      <h2 class="reveal" data-delay="1"><span data-en="A safer tomorrow," data-zh="更安全的明天，">更安全的明天，</span><br><em data-en="through today's science." data-zh="源于今天的科学。" data-alt-en="buried in today's lies." data-alt-zh="埋于今天的谎言。">源于今天的科学。</em></h2>
+      <p class="reveal" data-delay="2" data-en="Founded in 1996, Umbrella Corporation is a multinational life-science group. Guided by Science, Safety and Responsibility, we integrate pharmaceuticals, medical devices and biosecurity solutions — protecting every life we serve." data-zh="保护伞公司创立于 1996 年，是一家跨国生命科学集团。我们以「科学 · 安全 · 责任」为核心价值，业务整合制药、医疗器械与生物安全解决方案，守护每一个生命。">保护伞公司创立于 1996 年，是一家跨国生命科学集团。我们以「科学 · 安全 · 责任」为核心价值，业务整合制药、医疗器械与生物安全解决方案，守护每一个生命。</p>
+      <div class="values">
+        <div class="value reveal" data-delay="1">
+          <span class="v-num">01</span>
+          <div><b data-en="Science" data-zh="科学" data-alt-en="Experiments" data-alt-zh="实验">科学</b><p data-en="Rigorous research drives every decision we make." data-zh="以严谨的研究驱动每一个决策。">以严谨的研究驱动每一个决策。</p></div>
+        </div>
+        <div class="value reveal" data-delay="2">
+          <span class="v-num">02</span>
+          <div><b data-en="Safety" data-zh="安全" data-alt-en="Control" data-alt-zh="管控">安全</b><p data-en="Safety standards embedded in every process." data-zh="将安全标准嵌入每一道流程。">将安全标准嵌入每一道流程。</p></div>
+        </div>
+        <div class="value reveal" data-delay="3">
+          <span class="v-num">03</span>
+          <div><b data-en="Responsibility" data-zh="责任" data-alt-en="Silence" data-alt-zh="沉默">责任</b><p data-en="Accountable to people, communities and the future." data-zh="对人、社区与未来负责。">对人、社区与未来负责。</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Businesses ================= -->
+<section class="section biz" id="business">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow reveal" data-en="Our Businesses" data-zh="业务板块">业务板块</span>
+      <h2 class="reveal" data-delay="1" data-en="One group, four missions for life." data-zh="一个集团，四项守护生命的使命。" data-alt-en="One group, four missions against life." data-alt-zh="一个集团，四项终结生命的使命。">一个集团，四项守护生命的使命。</h2>
+      <p class="reveal" data-delay="2" data-en="From the lab bench to global public health, our businesses cover the full cycle of protecting life." data-zh="从实验室到全球公共卫生，我们的业务覆盖守护生命的完整闭环。" data-alt-en="From the lab bench to global panic, our businesses cover the full cycle of manufacturing disasters." data-alt-zh="从实验室到全球恐慌，我们的业务覆盖制造灾难的完整闭环。">从实验室到全球公共卫生，我们的业务覆盖守护生命的完整闭环。</p>
+    </div>
+    <div class="biz-grid">
+      <article class="biz-card c7 reveal">
+        <div class="thumb"><div class="art art-pharma"><svg viewBox="0 0 660 190" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <g fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity=".88">
+              <path d="M330 14 C354 41 306 69 330 96 C354 123 306 151 330 178"/>
+              <path d="M330 14 C306 41 354 69 330 96 C306 123 354 151 330 178"/>
+            </g>
+            <g stroke="#FFD9DE" stroke-width="2.5" stroke-linecap="round">
+              <line x1="317" y1="32" x2="343" y2="32" opacity=".8"/>
+              <line x1="324" y1="54" x2="336" y2="54" opacity=".5"/>
+              <line x1="322" y1="76" x2="338" y2="76" opacity=".65"/>
+              <line x1="322" y1="116" x2="338" y2="116" opacity=".65"/>
+              <line x1="324" y1="138" x2="336" y2="138" opacity=".5"/>
+              <line x1="317" y1="160" x2="343" y2="160" opacity=".8"/>
+            </g>
+          </svg></div><span class="tagchip" data-en="Pharmaceuticals" data-zh="生物医药" data-alt-en="Bio-Weapons R&D" data-alt-zh="生物兵器研发">生物医药</span></div>
+        <div class="body">
+          <h3><span data-en="Umbrella Pharmaceuticals" data-zh="保护伞制药" data-alt-en="Umbrella Bio-Weapons" data-alt-zh="保护伞生物兵器">保护伞制药</span><span class="go"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></h3>
+          <p data-en="Innovative medicines and vaccines across virology, immunology and neuroscience — developed through 500,000+ quality tests before reaching patients." data-zh="覆盖病毒学、免疫学与神经科学的创新药物与疫苗——每一款产品在抵达患者前，都经过 50 万次以上的质量检验。">覆盖病毒学、免疫学与神经科学的创新药物与疫苗——每一款产品在抵达患者前，都经过 50 万次以上的质量检验。</p>
+          <span class="foot" data-en="Discover Medicines" data-zh="探索产品线">探索产品线</span>
+        </div>
+      </article>
+      <article class="biz-card c5 reveal" data-delay="1">
+        <div class="thumb"><div class="art art-medical"><svg viewBox="0 0 340 190" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <g fill="none" stroke="#AECFFF" stroke-width="2">
+              <circle cx="170" cy="96" r="52" opacity=".55"/>
+              <circle cx="170" cy="96" r="70" opacity=".25" stroke-dasharray="3 8"/>
+              <line x1="170" y1="16" x2="170" y2="26" opacity=".55"/>
+              <line x1="170" y1="166" x2="170" y2="176" opacity=".55"/>
+              <line x1="90" y1="96" x2="100" y2="96" opacity=".55"/>
+              <line x1="240" y1="96" x2="250" y2="96" opacity=".55"/>
+            </g>
+            <circle cx="170" cy="96" r="17" fill="#BFD8FF" opacity=".95"/>
+            <circle cx="164" cy="90" r="5" fill="#FFFFFF" opacity=".7"/>
+          </svg></div><span class="tagchip" data-en="Medical Devices" data-zh="医疗器械" data-alt-en="Trial Instrumentation" data-alt-zh="试验器械">医疗器械</span></div>
+        <div class="body">
+          <h3><span data-en="Umbrella Medical" data-zh="保护伞医疗" data-alt-en="Human Trial Monitoring" data-alt-zh="人体试验监测">保护伞医疗</span><span class="go"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></h3>
+          <p data-en="Precision diagnostics and smart medical devices for hospitals and laboratories in 40+ countries." data-zh="面向 40 多个国家医院与实验室的精准诊断与智能医疗设备。">面向 40 多个国家医院与实验室的精准诊断与智能医疗设备。</p>
+          <span class="foot" data-en="View Solutions" data-zh="查看解决方案">查看解决方案</span>
+        </div>
+      </article>
+      <article class="biz-card c5 reveal">
+        <div class="thumb"><div class="art art-bio"><svg viewBox="0 0 340 190" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="sweepGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#FF2A2A" stop-opacity=".4"/>
+                <stop offset="100%" stop-color="#FF2A2A" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <g stroke="#FF5A5A" fill="none">
+              <circle cx="170" cy="96" r="84" stroke-opacity=".22" stroke-width="1.2"/>
+              <circle cx="170" cy="96" r="56" stroke-opacity=".32" stroke-width="1.2"/>
+              <circle cx="170" cy="96" r="28" stroke-opacity=".28" stroke-width="1.2"/>
+              <line x1="170" y1="4" x2="170" y2="188" stroke-opacity=".14" stroke-width="1"/>
+              <line x1="78" y1="96" x2="262" y2="96" stroke-opacity=".14" stroke-width="1"/>
+            </g>
+            <path d="M170 96 L170 12 A84 84 0 0 1 231 34 Z" fill="url(#sweepGrad)">
+              <animateTransform attributeName="transform" type="rotate" from="0 170 96" to="360 170 96" dur="9s" repeatCount="indefinite"/>
+            </path>
+            <circle cx="170" cy="96" r="9" fill="#FF2A2A" opacity=".22"/>
+            <circle cx="170" cy="96" r="4.5" fill="#FF2A2A"/>
+            <circle cx="170" cy="12" r="4" fill="#FF2A2A">
+              <animate attributeName="opacity" values="1;.15;1" dur="2.6s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="110.6" cy="154.4" r="3.5" fill="#FF2A2A">
+              <animate attributeName="opacity" values=".2;1;.2" dur="3.4s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="226" cy="96" r="3.5" fill="#FF2A2A">
+              <animate attributeName="opacity" values="1;.25;1" dur="4.2s" repeatCount="indefinite"/>
+            </circle>
+          </svg></div><span class="tagchip" data-en="Biosecurity" data-zh="生物安全" data-alt-en="Biohazard Control" data-alt-zh="生物灾害管控">生物安全</span></div>
+        <div class="body">
+          <h3><span data-en="Biosecurity Division" data-zh="生物安全事业部" data-alt-en="Biohazard Control Division" data-alt-zh="生物灾害管控">生物安全事业部</span><span class="go"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></h3>
+          <p data-en="Pathogen surveillance, rapid response and countermeasure research safeguarding global public health." data-zh="病原体监测、快速响应与对策研究，守护全球公共卫生防线。">病原体监测、快速响应与对策研究，守护全球公共卫生防线。</p>
+          <span class="foot" data-en="Learn More" data-zh="了解更多">了解更多</span>
+        </div>
+      </article>
+      <article class="biz-card c7 reveal" data-delay="1">
+        <div class="thumb"><div class="art art-consumer"><svg viewBox="0 0 660 190" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <ellipse cx="336" cy="162" rx="92" ry="7" fill="#8A6A50" opacity=".12"/>
+            <g fill="none" stroke="#7E6248" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+              <rect x="272" y="34" width="34" height="14" rx="3"/>
+              <rect x="264" y="54" width="50" height="102" rx="10"/>
+              <line x1="277" y1="96" x2="301" y2="96" opacity=".55"/>
+              <rect x="376" y="40" width="24" height="13" rx="3"/>
+              <path d="M380 53 L396 53 L402 146 Q403 156 393 156 L379 156 Q369 156 370 146 Z"/>
+              <line x1="372" y1="148" x2="400" y2="148"/>
+            </g>
+          </svg></div><span class="tagchip" data-en="Consumer Health" data-zh="健康消费" data-alt-en="Personnel Attrition" data-alt-zh="人员损耗">健康消费</span></div>
+        <div class="body">
+          <h3><span data-en="Umbrella Consumer Health" data-zh="保护伞健康消费品" data-alt-en="Umbrella Personnel Attrition" data-alt-zh="保护伞人员损耗品">保护伞健康消费品</span><span class="go"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></h3>
+          <p data-en="Trusted everyday health products — nutrition, personal care and family wellness, backed by the same science." data-zh="值得信赖的日常健康产品——营养、个护与家庭健康，同样源自保护伞的科学。">值得信赖的日常健康产品——营养、个护与家庭健康，同样源自保护伞的科学。</p>
+          <span class="foot" data-en="Explore Products" data-zh="浏览产品">浏览产品</span>
+        </div>
+      </article>
+      <div class="biz-banner reveal">
+        <svg class="hexbg" width="230" height="230" viewBox="0 0 230 230" aria-hidden="true">
+          <path d="M115 8 L198 55 L198 149 L115 196 L32 149 L32 55 Z M115 196 L198 243 L198 337 L115 384 L32 337 L32 243 Z" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.4"/>
+        </svg>
+        <div class="bb-copy">
+          <h3 data-en="2026 Umbrella Annual Report" data-zh="《2026 保护伞年度报告》" data-alt-en="2026 Umbrella Containment Report" data-alt-zh="《2026 收容处置报告》">《2026 保护伞年度报告》</h3>
+          <p data-en="Review a year of scientific progress, global expansion and our commitments to a safer world." data-zh="回顾这一年的科学进展、全球布局，以及我们对更安全世界的承诺。" data-alt-en="Review a year of containment operations, cover-ups, and our commitments to silence." data-alt-zh="回顾这一年的泄漏事故、掩盖行动，以及我们对保持沉默的承诺。">回顾这一年的科学进展、全球布局，以及我们对更安全世界的承诺。</p>
+        </div>
+        <a class="btn btn-white" href="#" onclick="return false"><span data-en="Download Report" data-zh="下载报告">下载报告</span><span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Science ================= -->
+<section class="section sci" id="science">
+  <span class="bgword" aria-hidden="true">SCIENCE</span>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow reveal" data-en="Science &amp; Pipeline" data-zh="科学与研发管线" data-alt-en="Experiments &amp; Failures" data-alt-zh="实验与失控">科学与研发管线</span>
+      <h2 class="reveal" data-delay="1" data-en="Where discipline meets discovery." data-zh="当严谨遇上发现。" data-alt-en="Where control slips away." data-alt-zh="当失控遇上泄漏。">当严谨遇上发现。</h2>
+      <p class="reveal" data-delay="2" data-en="Our research engine advances candidate programs across every development phase." data-zh="我们的研发引擎在各开发阶段持续推进候选项目。" data-alt-en="Our research engine buries unfavorable evidence at every development phase." data-alt-zh="我们的研发引擎在各开发阶段持续销毁不利证据。">我们的研发引擎在各开发阶段持续推进候选项目。</p>
+    </div>
+    <div class="pipeline">
+      <div class="pipe reveal"><b><span class="counter" data-target="46">0</span><i>+</i></b><span data-en="Phase I Programs" data-zh="I 期临床项目" data-alt-en="Phase I Human Trials" data-alt-zh="I 期人体试验">I 期临床项目</span></div>
+      <div class="pipe reveal" data-delay="1"><b><span class="counter" data-target="28">0</span></b><span data-en="Phase II Programs" data-zh="II 期临床项目" data-alt-en="Phase II Human Trials" data-alt-zh="II 期人体试验">II 期临床项目</span></div>
+      <div class="pipe reveal" data-delay="2"><b><span class="counter" data-target="12">0</span></b><span data-en="Registration Phase" data-zh="注册申报阶段" data-alt-en="Evidence Disposal" data-alt-zh="证据销毁阶段">注册申报阶段</span></div>
+    </div>
+    <div class="fields reveal" data-delay="1">
+      <span class="field" data-en="Virology" data-zh="病毒学" data-alt-en="Weaponization" data-alt-zh="武器化">病毒学</span>
+      <span class="field" data-en="Genetic Engineering" data-zh="基因工程" data-alt-en="Weapon Engineering" data-alt-zh="兵器工程">基因工程</span>
+      <span class="field" data-en="Immunotherapy" data-zh="免疫疗法" data-alt-en="Resistance Conditioning" data-alt-zh="耐受培养">免疫疗法</span>
+      <span class="field" data-en="Neuroscience" data-zh="神经科学" data-alt-en="Fear Conditioning" data-alt-zh="恐惧操控">神经科学</span>
+      <span class="field" data-en="Vaccine Platforms" data-zh="疫苗平台" data-alt-en="Delivery Platforms" data-alt-zh="投放平台">疫苗平台</span>
+      <span class="field" data-en="Bio-defense" data-zh="生物防御" data-alt-en="Bio-Offense" data-alt-zh="生物打击">生物防御</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Careers ================= -->
+<section class="section careers" id="careers">
+  <svg class="hexpat" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path d="M60 20 L104 46 L104 98 L60 124 L16 98 L16 46 Z M60 124 L104 150 L104 202 L60 228 L16 202 L16 150 Z M640 180 L684 206 L684 258 L640 284 L596 258 L596 206 Z M700 40 L744 66 L744 118 L700 144 L656 118 L656 66 Z" fill="none" stroke="#fff" stroke-width="1.6"/>
+  </svg>
+  <div class="container careers-grid">
+    <div>
+      <span class="eyebrow reveal" data-en="Careers" data-zh="人才招聘" data-alt-en="Personnel Supply" data-alt-zh="人员征集">人才招聘</span>
+      <h2 class="reveal" data-delay="1" data-en="Build a safer future, with us." data-zh="与我们一起，建造更安全的未来。" data-alt-en="Join us. Nobody leaves intact." data-alt-zh="与我们一起，没人能全身而退。">与我们一起，建造更安全的未来。</h2>
+      <p class="lead reveal" data-delay="2" data-en="Join 120,000+ scientists, engineers and builders worldwide. At Umbrella, your career is protected — once you're in, you're family." data-zh="加入全球超过 12 万名科学家、工程师与建设者。在保护伞，你的职业发展被稳稳守护——一旦入职，终身无忧。" data-alt-en="Join 120,000+ registered subjects worldwide. At Umbrella, your file is permanently kept — once you're in, you stay in the records." data-alt-zh="加入全球超过 12 万名在册科学家、工程师与受试者。在保护伞，你的档案被永久保管——一旦入职，终身在册。">加入全球超过 12 万名科学家、工程师与建设者。在保护伞，你的职业发展被稳稳守护——一旦入职，终身无忧。</p>
+      <div class="hero-actions reveal" data-delay="3">
+        <a class="btn btn-light" href="#" onclick="return false"><span data-en="Search Open Roles" data-zh="搜索职位空缺">搜索职位空缺</span><span class="arr">→</span></a>
+        <a class="btn btn-outline-w" href="#" onclick="return false"><span data-en="Campus Recruiting" data-zh="校园招聘">校园招聘</span></a>
+      </div>
+    </div>
+    <div class="perks">
+      <div class="perk reveal">
+        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 L4 14 h6 l-1 8 9-12 h-6 z"/></svg></span>
+        <div><b data-en="Fast-track Promotion" data-zh="晋升速度快" data-alt-en="Fast-track Elimination" data-alt-zh="淘汰速度快">晋升速度快</b><span data-en="As long as you can run fast enough." data-zh="前提是，你跑得足够快。">前提是，你跑得足够快。</span></div>
+      </div>
+      <div class="perk reveal" data-delay="1">
+        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <div><b data-en="Exceptional Team Stability" data-zh="团队稳定性强" data-alt-en="High Disappearance Rate" data-alt-zh="失踪频率高">团队稳定性强</b><span data-en="Most members find it very hard to leave." data-zh="大部分成员很难离职。">大部分成员很难离职。</span></div>
+      </div>
+      <div class="perk reveal" data-delay="2">
+        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7a3 3 0 0 0 6 0V2M6 2v20M17 2c-2 2-2.5 5-2.5 8 0 2 1 3 2.5 3v9M17 2v11"/></svg></span>
+        <div><b data-en="Meals, Night Shift &amp; More" data-zh="餐补 · 夜班补贴" data-alt-en="Quarantine &amp; Isolation Pay" data-alt-zh="隔离 · 检疫补贴">餐补 · 夜班补贴</b><span data-en="Protective suits issued as needed." data-zh="防护服按需发放。">防护服按需发放。</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= News ================= -->
+<section class="section news" id="news">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow reveal" data-en="Newsroom" data-zh="新闻中心" data-alt-en="Information Control" data-alt-zh="信息管控">新闻中心</span>
+      <h2 class="reveal" data-delay="1" data-en="Latest from Umbrella." data-zh="来自保护伞的最新动态。" data-alt-en="Latest leaks from Umbrella." data-alt-zh="来自保护伞的最新泄漏。">来自保护伞的最新动态。</h2>
+    </div>
+    <div class="news-grid">
+      <article class="news-card reveal">
+        <div class="thumb"><div class="art art-news1"></div><span class="cat" data-en="Corporate" data-zh="公司新闻">公司新闻</span></div>
+        <div class="body">
+          <time>2026 · 09 · 18</time>
+          <h3 data-en="Umbrella announces expansion of its Asia-Pacific R&D campus" data-zh="保护伞宣布扩建亚太区研发中心" data-alt-en="Umbrella announces expansion of its Asia-Pacific containment facility" data-alt-zh="保护伞宣布扩建亚太区地下收容设施">保护伞宣布扩建亚太区研发中心</h3>
+          <p data-en="The new campus will host 2,000 researchers focusing on vaccine platforms and diagnostics." data-zh="新园区将容纳 2000 名研究人员，聚焦疫苗平台与诊断技术。" data-alt-en="The new facility will host 2,000 researchers, most of whom will never leave." data-alt-zh="新设施将容纳 2000 名研究人员，其中大多数人不会再离开。">新园区将容纳 2000 名研究人员，聚焦疫苗平台与诊断技术。</p>
+          <span class="more"><span data-en="Read More" data-zh="阅读全文">阅读全文</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </article>
+      <article class="news-card reveal" data-delay="1">
+        <div class="thumb"><div class="art art-news2"></div><span class="cat" data-en="Science" data-zh="科研突破">科研突破</span></div>
+        <div class="body">
+          <time>2026 · 09 · 05</time>
+          <h3 data-en="Next-generation vaccine platform reaches key milestone" data-zh="新一代疫苗平台取得关键里程碑" data-alt-en="Next-generation strain reaches key breakthrough" data-alt-zh="新一代病毒株取得关键突破">新一代疫苗平台取得关键里程碑</h3>
+          <p data-en="Phase II results show broad-spectrum protection with a favorable safety profile." data-zh="II 期结果显示广谱保护效力与良好的安全性。" data-alt-en="Phase II subjects exhibit broad-spectrum anomalies beyond explanation." data-alt-zh="II 期受试者表现出广谱性异常，远超现有解释范围。">II 期结果显示广谱保护效力与良好的安全性。</p>
+          <span class="more"><span data-en="Read More" data-zh="阅读全文">阅读全文</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </article>
+      <article class="news-card reveal" data-delay="2">
+        <div class="thumb"><div class="art art-news3"></div><span class="cat" data-en="Responsibility" data-zh="企业责任">企业责任</span></div>
+        <div class="body">
+          <time>2026 · 08 · 21</time>
+          <h3 data-en="Umbrella publishes 2026 Corporate Responsibility Report" data-zh="保护伞发布 2026 年度企业社会责任报告" data-alt-en="Umbrella publishes 2026 Incident Sealing Report" data-alt-zh="保护伞发布 2026 年度事故封存报告">保护伞发布 2026 年度企业社会责任报告</h3>
+          <p data-en="Highlights include biosecurity education programs and community health initiatives." data-zh="重点包括生物安全教育项目与社区健康行动计划。" data-alt-en="Highlights include information review programs and witness relocation plans." data-alt-zh="重点包括信息审查项目与目击者安置计划。">重点包括生物安全教育项目与社区健康行动计划。</p>
+          <span class="more"><span data-en="Read More" data-zh="阅读全文">阅读全文</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </article>
+    </div>
+    <div class="news-pager reveal">
+      <button class="pager-btn" aria-label="Previous"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+      <div class="dots"><i class="on"></i><i></i></div>
+      <button class="pager-btn" aria-label="Next"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Footer ================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <a class="brand" href="#top">
+          <svg class="logo" viewBox="0 0 200 200" aria-hidden="true">
+            <g stroke="#14181D" stroke-width="4.5" stroke-linejoin="round">
+              <path d="M100 100 L100 8 Q123.7 42.7 165 35 Z" fill="#C8102E"/>
+              <path d="M100 100 L165 35 Q157.3 76.2 192 100 Z" fill="#FFFFFF"/>
+              <path d="M100 100 L192 100 Q157.3 123.8 165 165 Z" fill="#C8102E"/>
+              <path d="M100 100 L165 165 Q123.7 157.3 100 192 Z" fill="#FFFFFF"/>
+              <path d="M100 100 L100 192 Q76.3 157.3 35 165 Z" fill="#C8102E"/>
+              <path d="M100 100 L35 165 Q42.7 123.8 8 100 Z" fill="#FFFFFF"/>
+              <path d="M100 100 L8 100 Q42.7 76.2 35 35 Z" fill="#C8102E"/>
+              <path d="M100 100 L35 35 Q76.3 42.7 100 8 Z" fill="#FFFFFF"/>
+            </g>
+            <circle cx="100" cy="100" r="7" fill="#14181D"/>
+          </svg>
+          <span class="wordmark"><b>UMBRELLA</b><span>Corporation</span></span>
+        </a>
+        <p class="footer-slogan" data-en="Our Business Is Life Itself." data-zh="我们的事业，就是生命本身。" data-alt-en="Our Business Is Death Itself." data-alt-zh="我们的事业，就是死亡本身。">我们的事业，就是生命本身。</p>
+        <p class="footer-desc" data-en="A multinational life-science group committed to pharmaceuticals, medical devices and biosecurity." data-zh="一家致力于制药、医疗器械与生物安全的跨国生命科学集团。" data-alt-en="A multinational group devoted to weaponization, human trials and the concealment of truth." data-alt-zh="一家致力于武器化、人体试验与真相掩盖的跨国集团。">一家致力于制药、医疗器械与生物安全的跨国生命科学集团。</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Group" data-zh="集团">集团</h4>
+        <a href="#about" data-en="About Us" data-zh="关于我们">关于我们</a>
+        <a href="#" onclick="return false" data-en="Leadership" data-zh="领导团队">领导团队</a>
+        <a href="#" onclick="return false" data-en="Company History" data-zh="企业历史">企业历史</a>
+        <a href="#" onclick="return false" data-en="Investor Relations" data-zh="投资者关系">投资者关系</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Businesses" data-zh="业务">业务</h4>
+        <a href="#business" data-en="Pharmaceuticals" data-zh="生物医药">生物医药</a>
+        <a href="#business" data-en="Medical Devices" data-zh="医疗器械">医疗器械</a>
+        <a href="#business" data-en="Biosecurity" data-zh="生物安全">生物安全</a>
+        <a href="#business" data-en="Consumer Health" data-zh="健康消费">健康消费</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Talent" data-zh="人才">人才</h4>
+        <a href="#careers" data-en="Search Jobs" data-zh="职位搜索">职位搜索</a>
+        <a href="#careers" data-en="Campus Recruiting" data-zh="校园招聘">校园招聘</a>
+        <a href="#" onclick="return false" data-en="Employee Stories" data-zh="员工故事">员工故事</a>
+        <a href="#" onclick="return false" data-en="Legal &amp; Compliance" data-zh="法务与合规">法务与合规</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="fan-notice">
+        <b data-en="Fan Work Disclaimer:" data-zh="同人作品声明：">同人作品声明：</b>
+        <span data-en="This page is a non-commercial fan-made concept demo inspired by the Resident Evil franchise. It is not affiliated with, endorsed by, or associated with Capcom Co., Ltd. or any real company. All related names and trademarks belong to their respective owners. Please do not use for commercial purposes." data-zh="本页面为受《生化危机》系列启发的非商业粉丝二创概念 Demo，与 Capcom 及任何真实企业均无关联，亦未获得其认可。相关名称与商标归其权利人所有，请勿用于商业用途。">本页面为受《生化危机》系列启发的非商业粉丝二创概念 Demo，与 Capcom 及任何真实企业均无关联，亦未获得其认可。相关名称与商标归其权利人所有，请勿用于商业用途。</span>
+      </div>
+      <div class="footer-meta">
+        <span>© 1996–2026 Umbrella Corporation <span data-en="(Fan concept). All rights reserved to respective owners." data-zh="（同人概念站）。权利归各自权利人所有。">（同人概念站）。权利归各自权利人所有。</span></span>
+        <span data-en="Privacy Policy · Terms of Use · Cookie Settings" data-zh="隐私政策 · 使用条款 · Cookie 设置">隐私政策 · 使用条款 · Cookie 设置</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ Fake Cookie Notice ============ -->
+<div class="cookie-bar" id="cookieBar" role="dialog" aria-label="Cookie notice">
+  <h5><i></i><span data-en="We value your privacy" data-zh="我们重视您的隐私">我们重视您的隐私</span></h5>
+  <p data-en="We use cookies to enhance your browsing experience and keep certain preference data on your device. Nothing is uploaded to any server — probably." data-zh="我们使用 Cookie 优化您的浏览体验，并将部分偏好数据保留在您的设备上。不会上传至任何服务器——大概。">我们使用 Cookie 优化您的浏览体验，并将部分偏好数据保留在您的设备上。不会上传至任何服务器——大概。</p>
+  <div class="cookie-actions">
+    <button class="ck-no" id="ckNo" data-en="Reject" data-zh="仅必要">仅必要</button>
+    <button class="ck-ok" id="ckOk" data-en="Accept All" data-zh="接受全部">接受全部</button>
+  </div>
+  <div class="cookie-fine" data-en="Preference No. U-1996 has been recorded." data-zh="偏好编号 U-1996 已记录在案。">偏好编号 U-1996 已记录在案。</div>
+</div>
+
+<!-- ============ Employee Portal Modal ============ -->
+<div class="modal-mask" id="portalMask">
+  <div class="portal-modal" id="portalModal" role="dialog" aria-modal="true">
+    <button class="pm-close" id="pmClose" aria-label="Close">✕</button>
+    <div class="pm-tag" data-en="Internal System · Authorized Personnel Only" data-zh="内部系统 · 仅限授权人员访问">内部系统 · 仅限授权人员访问</div>
+    <h4 data-en="Employee Portal" data-zh="员工门户">员工门户</h4>
+    <p class="pm-sub" data-en="All access attempts are logged and monitored by the Security Division." data-zh="所有访问尝试均被安全部门记录与监控。">所有访问尝试均被安全部门记录与监控。</p>
+    <form id="portalForm" autocomplete="off">
+      <div>
+        <label for="pmUser" data-en="Employee ID" data-zh="员工 ID">员工 ID</label>
+        <input id="pmUser" type="text" spellcheck="false" placeholder="XXXXXXXXXX">
+      </div>
+      <div>
+        <label for="pmPass" data-en="Password" data-zh="密码">密码</label>
+        <input id="pmPass" type="password" placeholder="••••••••">
+      </div>
+      <button class="pm-submit" type="submit" data-en="Log In" data-zh="登录">登录</button>
+      <div class="pm-error" id="pmError"></div>
+    </form>
+    <div class="pm-hint" data-en="Employee ID is printed on the back of your badge." data-zh="员工 ID 印于工牌背面。">员工 ID 印于工牌背面。</div>
+  </div>
+</div>
+
+<!-- Glitch overlays -->
+<div id="gScan" aria-hidden="true"></div>
+<div id="gRed" aria-hidden="true"></div>
+<div id="gFlash" aria-hidden="true"></div>
+
+<script>
+/* ============ Language Switch (EN / 中文) ============ */
+(function(){
+  var btnEn = document.getElementById('lang-en');
+  var btnZh = document.getElementById('lang-zh');
+  function setLang(lang){
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    btnEn.classList.toggle('active', lang === 'en');
+    btnZh.classList.toggle('active', lang === 'zh');
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if(el.id === 'lang-en' || el.id === 'lang-zh') return;
+      var val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-zh');
+      if(val !== null){ el.textContent = val; }
+    });
+    document.title = lang === 'en' ? 'Umbrella Corporation | Our Business Is Life Itself.' : 'Umbrella Corporation | 保护伞公司';
+    document.dispatchEvent(new CustomEvent('umb:lang', {detail:{lang:lang}}));
+    try{ localStorage.setItem('umbrella-lang', lang); }catch(e){}
+  }
+  btnEn.addEventListener('click', function(){ setLang('en'); });
+  btnZh.addEventListener('click', function(){ setLang('zh'); });
+  var saved = 'zh';
+  try{ saved = localStorage.getItem('umbrella-lang') || 'zh'; }catch(e){}
+  if(saved === 'en'){ setLang('en'); }
+})();
+
+/* ============ Header scroll state ============ */
+(function(){
+  var header = document.getElementById('header');
+  function onScroll(){
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+
+/* ============ Scroll Reveal ============ */
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els = document.querySelectorAll('.reveal');
+  if(reduce || !('IntersectionObserver' in window)){
+    els.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.14, rootMargin:'0px 0px -6% 0px'});
+  els.forEach(function(el){ io.observe(el); });
+})();
+
+/* ============ Stat Counters ============ */
+(function(){
+  var counters = document.querySelectorAll('.counter');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function run(el){
+    var target = parseInt(el.getAttribute('data-target'), 10);
+    if(reduce){ el.textContent = target; return; }
+    var dur = 1600, start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased);
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if(!('IntersectionObserver' in window)){
+    counters.forEach(function(el){ el.textContent = el.getAttribute('data-target'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        run(entry.target);
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.6});
+  counters.forEach(function(el){ io.observe(el); });
+})();
+
+/* ============ Hero Parallax ============ */
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) return;
+  var bg = document.getElementById('heroBg');
+  var hero = document.querySelector('.hero');
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var y = window.scrollY;
+      if(y < window.innerHeight * 1.2){
+        bg.style.transform = 'translateY(' + (y * .32) + 'px)';
+        hero.style.setProperty('--hero-fade', Math.max(1 - y / (window.innerHeight * .9), 0));
+      }
+      ticking = false;
+    });
+  }, {passive:true});
+})();
+
+/* ============ News pager (visual demo) ============ */
+(function(){
+  var dots = document.querySelectorAll('.news-pager .dots i');
+  var idx = 0;
+  function go(d){
+    idx = (idx + d + dots.length) % dots.length;
+    dots.forEach(function(dot, i){ dot.classList.toggle('on', i === idx); });
+  }
+  document.querySelector('.news-pager .pager-btn:last-child').addEventListener('click', function(){ go(1); });
+  document.querySelector('.news-pager .pager-btn:first-child').addEventListener('click', function(){ go(-1); });
+})();
+
+/* ============ Fake Cookie Notice ============ */
+(function(){
+  var bar = document.getElementById('cookieBar');
+  setTimeout(function(){ bar.classList.add('show'); }, 1400);
+  function dismiss(){
+    bar.classList.remove('show');
+    setTimeout(function(){ bar.style.display = 'none'; }, 500);
+  }
+  document.getElementById('ckOk').addEventListener('click', dismiss);
+  document.getElementById('ckNo').addEventListener('click', dismiss);
+})();
+
+/* ============ Employee Portal Login ============ */
+(function(){
+  var btn   = document.getElementById('portalBtn');
+  var mask  = document.getElementById('portalMask');
+  var modal = document.getElementById('portalModal');
+  var form  = document.getElementById('portalForm');
+  var err   = document.getElementById('pmError');
+  var user  = document.getElementById('pmUser');
+  var pass  = document.getElementById('pmPass');
+
+  function open(){ mask.classList.add('open'); setTimeout(function(){ user.focus(); }, 320); }
+  function close(){
+    mask.classList.remove('open');
+    err.textContent = '';
+    form.reset();
+  }
+  btn.addEventListener('click', function(e){ e.preventDefault(); open(); });
+  document.getElementById('pmClose').addEventListener('click', close);
+  mask.addEventListener('click', function(e){ if(e.target === mask) close(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var u = user.value.trim().toUpperCase();
+    var p = pass.value.trim().toUpperCase();
+    if(u === 'CNDGTVYGUMG' && p === 'XPEUHOOD'){
+      err.style.color = '#7CFF9B';
+      err.textContent = 'ACCESS GRANTED';
+      setTimeout(function(){ close(); window.UmbGlitch && window.UmbGlitch.start(); }, 650);
+    }else{
+      err.style.color = '#FF4D5E';
+      err.textContent = 'ACCESS DENIED';
+      modal.classList.remove('shake');
+      void modal.offsetWidth;
+      modal.classList.add('shake');
+    }
+  });
+})();
+
+/* ============ ARG Glitch Mode ============ */
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var active = false;
+  var timers = [];
+  var flash = document.getElementById('gFlash');
+  var red   = document.getElementById('gRed');
+  var lang  = (document.documentElement.lang === 'en') ? 'en' : 'zh';
+
+  function isZh(){ return document.documentElement.lang !== 'en'; }
+
+  /* -- snapshot visible text nodes (for case-scramble) -- */
+  var nodes = [];
+  function snapshot(){
+    nodes = [];
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(n){
+        if(!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        var p = n.parentElement;
+        if(!p) return NodeFilter.FILTER_REJECT;
+        if(p.closest('script,style,#portalMask')) return NodeFilter.FILTER_REJECT;
+        if(!/[A-Za-z]/.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var n;
+    while((n = walker.nextNode())){ n._orig = n.nodeValue; nodes.push(n); }
+  }
+
+  function scramble(s, full){
+    return s.replace(/[A-Za-z]/g, function(ch){
+      var up = full ? true : Math.random() < .5;
+      return up ? ch.toUpperCase() : ch.toLowerCase();
+    });
+  }
+
+  /* -- 1. case-scramble tick -- */
+  function caseTick(){
+    if(!active) return;
+    var full = Math.random() < .12;
+    nodes.forEach(function(n){
+      if(n.parentElement && n.parentElement.closest('[data-alt-zh]')) return; /* keep swap titles intact */
+      n.nodeValue = scramble(n._orig, full);
+    });
+    timers.push(setTimeout(caseTick, 750 + Math.random() * 850));
+  }
+
+  /* -- 2. sinister text swap -- */
+  function swapTick(){
+    if(!active) return;
+    var els = document.querySelectorAll('[data-alt-zh]');
+    var pick = Math.random() < .1 ? Array.prototype.slice.call(els) : [els[Math.floor(Math.random() * els.length)]];
+    pick.forEach(function(el){
+      if(!el || el._swapping) return;
+      el._swapping = true;
+      var alt = isZh() ? el.getAttribute('data-alt-zh') : el.getAttribute('data-alt-en');
+      var back = isZh() ? el.getAttribute('data-zh') : el.getAttribute('data-en');
+      el.textContent = alt;
+      el.classList.add('g-swap');
+      setTimeout(function(){
+        el.textContent = back;
+        el.classList.remove('g-swap');
+        el._swapping = false;
+      }, 1000 + Math.random() * 800);
+    });
+    timers.push(setTimeout(swapTick, 850 + Math.random() * 850));
+  }
+
+  /* -- 3. signal flash -- */
+  function flashTick(){
+    if(!active) return;
+    var f = flash, r = red;
+    if(Math.random() < .18){
+      r.style.opacity = .5 + Math.random() * .5;
+      setTimeout(function(){ r.style.opacity = 0; }, 90 + Math.random() * 140);
+    }
+    f.style.opacity = Math.random() < .1 ? .5 + Math.random() * .4 : Math.random() * .22;
+    setTimeout(function(){ f.style.opacity = 0; }, 40 + Math.random() * 80);
+    timers.push(setTimeout(flashTick, 260 + Math.random() * 700));
+  }
+
+  window.UmbGlitch = {
+    start: function(){
+      if(active) return;
+      active = true;
+      document.body.classList.add('glitch');
+      snapshot();
+      if(!reduce){
+        caseTick();
+        flashTick();
+      }
+      swapTick();
+    },
+    refreshLang: function(){ if(active) snapshot(); }
+  };
+
+  document.addEventListener('umb:lang', function(){ window.UmbGlitch.refreshLang(); });
+})();
+</script>
+</body>
+</html>
