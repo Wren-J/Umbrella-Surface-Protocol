@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Umbrella Corporation | 保护伞公司</title>
 <meta name="description" content="Umbrella Corporation corporate homepage demo — fan-made concept.">
 <link rel="icon" type="image/png" href="assets/logo.png">
@@ -306,6 +306,154 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .section{padding:80px 0}
 }
 
+/* ============ Mobile Nav Panel ============ */
+.mobile-nav{display:none;position:fixed;left:0;right:0;top:0;z-index:99;flex-direction:column;padding:calc(64px + env(safe-area-inset-top,0px)) 22px calc(18px + env(safe-area-inset-bottom,0px));background:rgba(11,14,19,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.1);box-shadow:0 26px 60px rgba(0,0,0,.5);transform:translateY(-102%);transition:transform .45s var(--ease)}
+.mobile-nav.open{transform:translateY(0)}
+.mobile-nav a{padding:15px 2px;font-size:16.5px;font-weight:600;color:#fff;letter-spacing:.02em;border-bottom:1px solid rgba(255,255,255,.07);transition:color .25s,padding-left .25s var(--ease)}
+.mobile-nav a:active,.mobile-nav a:hover{color:var(--red-bright);padding-left:8px}
+.mobile-nav .m-portal{margin-top:16px;text-align:center;font-size:14.5px;font-weight:600;color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:13px 2px;border-bottom:1px solid rgba(255,255,255,.3)}
+.mobile-nav .m-portal:active{background:rgba(255,255,255,.12)}
+.burger.open i:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open i:nth-child(2){opacity:0}
+.burger.open i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media (max-width:1020px){
+  .mobile-nav{display:flex}
+}
+/* touch devices: hover-only content must stay visible */
+@media (hover:none){
+  .biz-card .foot{opacity:1;transform:none}
+  .biz-card:hover,.news-card:hover,.pipe:hover,.biz-banner:hover{transform:none}
+  .news-card:hover h3{color:inherit}
+  .value:hover{padding-left:4px;background:transparent}
+  .footer-col a:hover{padding-left:0}
+}
+
+/* ============ Mobile (<=720px) ============ */
+@media (max-width:720px){
+  .container{width:calc(100% - 44px)}
+  .header .container{gap:12px;height:64px}
+  .brand{gap:10px}
+  .brand .logo{width:32px;height:32px}
+  .wordmark b{font-size:14.5px;letter-spacing:.16em}
+  .wordmark span{font-size:8px;letter-spacing:.26em;margin-top:3px}
+  .lang button{padding:4px 9px;font-size:11.5px}
+  .portal-btn{display:none}
+  .mobile-nav{padding-top:calc(64px + env(safe-area-inset-top,0px))}
+
+  /* hero */
+  .hero{min-height:100vh;min-height:100svh}
+  .hero-inner{padding:108px 0 64px;gap:30px}
+  .hero-logo{width:min(168px,46vw)}
+  .emblem-ring{inset:-24px}
+  .emblem-ring.r2{inset:-46px}
+  .hero-tag{font-size:11px;letter-spacing:.14em;padding:7px 13px}
+  .hero h1{margin-top:22px;font-size:clamp(30px,8.4vw,42px)}
+  .hero-sub{margin-top:20px;font-size:15.5px}
+  .hero-actions{flex-direction:column;align-items:stretch;gap:12px;margin-top:30px}
+  .hero-actions .btn{justify-content:center;padding:14px 22px}
+  .hero-slogan{margin-top:30px;font-size:11.5px;letter-spacing:.16em;gap:10px}
+  .hero-slogan::before{width:26px}
+  .scroll-hint{display:none}
+  .hero-stats .container{grid-template-columns:repeat(2,1fr);gap:18px 12px;padding:24px 0}
+  .stat b{font-size:26px}
+  .stat span{font-size:10.5px;letter-spacing:.08em}
+
+  /* sections */
+  .section{padding:64px 0}
+  .section-head{max-width:none;margin-bottom:34px}
+  .section-head h2{font-size:clamp(24px,6.6vw,31px)}
+  .section-head p{font-size:15px;margin-top:12px}
+  .eyebrow{font-size:11px;letter-spacing:.16em;gap:8px}
+  .eyebrow::before{width:18px}
+
+  /* about */
+  .about-grid{gap:30px}
+  .about-visual{aspect-ratio:4/4.2}
+  .av-badge{top:16px;left:16px;font-size:10px;padding:7px 12px;letter-spacing:.14em}
+  .about-visual .av-card{left:16px;right:16px;bottom:16px;padding:16px 18px}
+  .about-visual .av-card b{font-size:14px}
+  .about-visual .av-card span{font-size:11.5px}
+  .about-copy h2{font-size:clamp(24px,6.6vw,31px)}
+  .about-copy>p{font-size:15.5px}
+  .values{margin-top:26px}
+  .value{padding:16px 2px;gap:14px}
+  .value b{font-size:16px}
+  .value p{font-size:13.5px}
+
+  /* businesses */
+  .biz-grid{gap:16px}
+  .biz-card .thumb{height:158px}
+  .biz-card .body{padding:20px 18px 22px}
+  .biz-card h3{font-size:18px}
+  .biz-card p{font-size:14px}
+  .biz-card .foot{font-size:11.5px;letter-spacing:.12em}
+  .biz-banner{padding:26px 20px;gap:20px}
+  .biz-banner h3{font-size:19px}
+  .biz-banner p{font-size:14px}
+  .biz-banner .btn{width:100%;justify-content:center}
+  .biz-banner .hexbg{right:-60px;opacity:.16}
+
+  /* science */
+  .sci .bgword{font-size:38vw;right:-6%;top:1%}
+  .pipeline{gap:14px;margin-bottom:38px}
+  .pipe{padding:22px 20px}
+  .pipe b{font-size:32px}
+  .pipe span{font-size:12px}
+  .fields{gap:8px}
+  .field{padding:9px 15px;font-size:13px}
+
+  /* careers */
+  .careers-grid{gap:30px}
+  .careers h2{font-size:clamp(24px,6.6vw,31px)}
+  .careers .lead{font-size:15px;margin-top:14px}
+  .perks{gap:12px}
+  .perk{padding:15px 16px;gap:13px}
+  .perk .ic{width:36px;height:36px}
+  .perk b{font-size:14.5px}
+  .perk span{font-size:12.5px}
+  .careers .btn{margin-top:24px}
+  .careers .btn+.btn{margin-top:0}
+  .careers .btn{width:100%;justify-content:center;margin-right:0}
+
+  /* news */
+  .news-grid{gap:16px}
+  .news-card .thumb{height:150px}
+  .news-card .body{padding:18px 18px 20px}
+  .news-card h3{font-size:16.5px}
+  .news-pager{margin-top:26px;gap:14px}
+
+  /* footer */
+  .footer-top{grid-template-columns:1fr;gap:26px;padding:52px 0 34px}
+  .footer-desc{max-width:none;font-size:13px}
+  .footer-slogan{font-size:12px;letter-spacing:.14em}
+  .fan-notice{font-size:12px;padding:12px 14px;line-height:1.75}
+  .footer-meta{flex-direction:column;gap:6px;font-size:11.5px}
+
+  /* overlays */
+  .cookie-bar{left:12px;right:12px;width:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px));padding:16px 16px 14px}
+  .cookie-bar h5{font-size:13px}
+  .cookie-bar p{font-size:11.5px}
+  .modal-mask{padding:18px}
+  .portal-modal{width:100%;padding:26px 22px 22px;border-radius:14px}
+  .portal-modal h4{font-size:18px}
+  .portal-modal .pm-close{top:10px;right:10px}
+  .portal-modal .pm-tag{font-size:9.5px;letter-spacing:.2em}
+  .portal-modal .pm-submit{padding:13px 0;font-size:13px}
+}
+
+/* ============ Small phones (<=420px) ============ */
+@media (max-width:420px){
+  .container{width:calc(100% - 36px)}
+  .hero h1{font-size:clamp(27px,8.4vw,34px)}
+  .hero-logo{width:min(148px,44vw)}
+  .hero-sub{font-size:14.5px}
+  .stat b{font-size:23px}
+  .biz-card .thumb{height:142px}
+  .news-card .thumb{height:136px}
+  .biz-banner h3{font-size:17.5px}
+  .mobile-nav a{font-size:15.5px;padding:14px 2px}
+}
+
 /* ============ Fake Cookie Notice ============ */
 .cookie-bar{position:fixed;left:22px;bottom:22px;z-index:1200;width:min(360px,calc(100vw - 44px));background:#FFFFFF;border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 48px rgba(10,14,20,.16);padding:18px 20px;opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .45s var(--ease),transform .45s var(--ease)}
 .cookie-bar.show{opacity:1;transform:translateY(0);pointer-events:auto}
@@ -387,9 +535,17 @@ body.glitch [data-alt-zh].g-swap{color:var(--red-bright);text-shadow:0 0 14px rg
         <button id="lang-zh" class="active" data-en="中文" data-zh="中文">中文</button>
       </div>
       <a class="portal-btn" href="#" id="portalBtn"><span data-en="Employee Portal" data-zh="员工门户">员工门户</span></a>
-      <button class="burger" aria-label="Menu"><i></i><i></i><i></i></button>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
     </div>
   </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#about" data-en="About" data-zh="关于我们" data-alt-en="The Cover-up" data-alt-zh="掩盖真相">关于我们</a>
+    <a href="#business" data-en="Businesses" data-zh="业务板块" data-alt-en="Front Operations" data-alt-zh="掩护业务">业务板块</a>
+    <a href="#science" data-en="Science" data-zh="科学研究" data-alt-en="Classified" data-alt-zh="机密实验">科学研究</a>
+    <a href="#careers" data-en="Careers" data-zh="加入我们" data-alt-en="Personnel Supply" data-alt-zh="人员征集">加入我们</a>
+    <a href="#news" data-en="Newsroom" data-zh="新闻中心" data-alt-en="Information Control" data-alt-zh="信息管控">新闻中心</a>
+    <a href="#" class="m-portal" id="portalBtnMobile"><span data-en="Employee Portal" data-zh="员工门户">员工门户</span></a>
+  </nav>
 </header>
 
 <!-- ================= Hero ================= -->
@@ -923,6 +1079,26 @@ body.glitch [data-alt-zh].g-swap{color:var(--red-bright);text-shadow:0 0 14px rg
   document.getElementById('ckNo').addEventListener('click', dismiss);
 })();
 
+/* ============ Mobile Nav (burger) ============ */
+(function(){
+  var burger = document.getElementById('burger');
+  var panel  = document.getElementById('mobileNav');
+  if(!burger || !panel) return;
+  function setOpen(open){
+    panel.classList.toggle('open', open);
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  burger.addEventListener('click', function(){ setOpen(!panel.classList.contains('open')); });
+  Array.prototype.forEach.call(panel.querySelectorAll('a'), function(a){
+    a.addEventListener('click', function(){ setOpen(false); });
+  });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') setOpen(false); });
+  window.addEventListener('resize', function(){ if(window.innerWidth > 1020) setOpen(false); });
+  window.UmbNav = { close: function(){ setOpen(false); } };
+})();
+
 /* ============ Employee Portal Login ============ */
 (function(){
   var btn   = document.getElementById('portalBtn');
@@ -940,6 +1116,14 @@ body.glitch [data-alt-zh].g-swap{color:var(--red-bright);text-shadow:0 0 14px rg
     form.reset();
   }
   btn.addEventListener('click', function(e){ e.preventDefault(); open(); });
+  var btnMobile = document.getElementById('portalBtnMobile');
+  if(btnMobile){
+    btnMobile.addEventListener('click', function(e){
+      e.preventDefault();
+      if(window.UmbNav) window.UmbNav.close();
+      setTimeout(open, 220);
+    });
+  }
   document.getElementById('pmClose').addEventListener('click', close);
   mask.addEventListener('click', function(e){ if(e.target === mask) close(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
