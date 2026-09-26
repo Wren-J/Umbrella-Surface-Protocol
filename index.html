@@ -560,8 +560,7 @@ body.glitch [data-alt-zh].g-swap{color:var(--red-bright);text-shadow:0 0 14px rg
 <section class="hero" id="top">
   <div class="hero-bg" id="heroBg">
     <div class="hero-slides" id="heroSlides">
-      <img class="slide on" src="assets/hero-a1.jpg" alt="">
-      <img class="slide" src="assets/hero-a2.jpg" alt="">
+      <img class="slide on" src="assets/hero-a2.jpg" alt="">
       <img class="slide" src="assets/hero-a3.jpg" alt="">
       <img class="slide gset" src="assets/hero-b1.jpg" alt="">
       <img class="slide gset" src="assets/hero-b2.jpg" alt="">
@@ -1047,18 +1046,19 @@ window.UmbSlides = (function(){
   if(!slides.length) return { setMode: function(){} };
   var idx = 0, glitch = false, timer = null;
   var NORMAL_MS = 4600, GLITCH_MS = 3200;   /* 每张停留时长；异常组更快更不安 */
-  function setStart(){ return glitch ? 3 : 0; }   /* 前 3 张正常组，后 3 张异常组 */
+  function startIdx(){ return glitch ? 2 : 0; }     /* 正常组 2 张，异常组从第 3 张起共 3 张 */
+  function groupLen(){ return glitch ? 3 : 2; }
   function show(k){
     slides.forEach(function(s, i){ s.classList.toggle('on', i === k); });
   }
   function start(){
     clearTimeout(timer);
-    show(setStart() + idx);
+    show(startIdx() + idx);
     timer = setTimeout(tick, glitch ? GLITCH_MS : NORMAL_MS);
   }
   function tick(){
-    idx = (idx + 1) % 3;
-    show(setStart() + idx);
+    idx = (idx + 1) % groupLen();
+    show(startIdx() + idx);
     timer = setTimeout(tick, glitch ? GLITCH_MS : NORMAL_MS);
   }
   start();
